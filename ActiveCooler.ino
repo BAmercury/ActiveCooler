@@ -15,6 +15,11 @@
 // Temperature Ranges (celsius)
 #define TEMP_MIN 80
 #define TEMP_MAX 105 // F
+// Motor Speed Ranges
+#define MOTOR_MIN 20 // (In terms of duty cycle) At TEMP_MIN this speed will engage
+#define MOTOR_MAX 100 // (In terms of duty cycle) At TEMP_MAX this speed will engage
+
+
 
 // Configure onewire object
 OneWire oneWire(PIN_TEMP_ONEWIRE);
@@ -42,9 +47,6 @@ void setup(void)
     PLLFRQ=(PLLFRQ&0xCF)|0x30;
     // Terminal count for Timer 4 PWM
     OCR4C=255;
-
-    
-
 }
 
 void loop(void)
