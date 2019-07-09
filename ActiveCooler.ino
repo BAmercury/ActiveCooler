@@ -19,7 +19,8 @@
 #define MOTOR_MIN 20 // (In terms of duty cycle) At TEMP_MIN this speed will engage
 #define MOTOR_MAX 100 // (In terms of duty cycle) At TEMP_MAX this speed will engage
 
-
+// Macro to converts from duty (0..100) to PWM (0..255)
+#define DUTY2PWM(x)  ((255*(x))/100)
 
 // Configure onewire object
 OneWire oneWire(PIN_TEMP_ONEWIRE);
@@ -28,6 +29,8 @@ OneWire oneWire(PIN_TEMP_ONEWIRE);
 DallasTemperature sensors(&oneWire);
 
 int pwm = 0;
+
+
 
 void setup(void)
 {
@@ -67,7 +70,7 @@ void loop(void)
         Serial.print(temp);
         Serial.print(",");
         // Map the temperature to fan pwm value
-        pwm = map(temp, TEMP_MIN, TEMP_MAX, 0, 255);
+        pwm = map(temp, TEMP_MIN, TEMP_MAX, DUTY2PWM(MOTOR_MIN), DUTY2PWM(MOTOR_MAX));
         Serial.println(pwm);
     }
     else
