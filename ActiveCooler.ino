@@ -63,10 +63,12 @@ void loop(void)
 
     if (temp != DEVICE_DISCONNECTED_C) // Refer to DallasTemperature.h for error codes
     {
+        Serial.print("Temperatuare (F): ");
         Serial.print(temp);
         Serial.print(", ");
         // Map the temperature to fan pwm value
         pwm = map(temp, TEMP_MIN, TEMP_MAX, DUTY2PWM(MOTOR_MIN), DUTY2PWM(MOTOR_MAX));
+        Serial.print("PWM: ");
         Serial.println(pwm);
     }
     else
