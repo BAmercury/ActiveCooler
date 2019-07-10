@@ -1,20 +1,18 @@
-/* Simple Active Cooler
-   Bhautik (Brian) Amin
-   brianamin@dpiuav.com
-
-
-
+/* 
+    Simple Active Cooler
+    Bhautik (Brian) Amin
+    brianamin@dpiuav.com
 */
 #include <DallasTemperature.h>
 #include <OneWire.h>
 
-
+// Pins
 #define PIN_TEMP_ONEWIRE 7
 
 
-// Temperature Ranges (celsius)
+// Temperature Ranges (fahrenheit)
 #define TEMP_MIN 80
-#define TEMP_MAX 105 // F
+#define TEMP_MAX 105
 // Motor Speed Ranges
 #define MOTOR_MIN 20 // (In terms of duty cycle) At TEMP_MIN this speed will engage
 #define MOTOR_MAX 100 // (In terms of duty cycle) At TEMP_MAX this speed will engage
@@ -29,8 +27,6 @@ OneWire oneWire(PIN_TEMP_ONEWIRE);
 DallasTemperature sensors(&oneWire);
 
 int pwm = 0;
-
-
 
 void setup(void)
 {
@@ -62,13 +58,13 @@ void loop(void)
      */ 
     sensors.requestTemperatures();
 
-    float temp = sensors.getTempCByIndex(0);
+    float temp = sensors.getTempFByIndex(0);
     // Check if reading was successful
 
-    if (temp != DEVICE_DISCONNECTED_C)
+    if (temp != DEVICE_DISCONNECTED_C) // Refer to DallasTemperature.h for error codes
     {
         Serial.print(temp);
-        Serial.print(",");
+        Serial.print(", ");
         // Map the temperature to fan pwm value
         pwm = map(temp, TEMP_MIN, TEMP_MAX, DUTY2PWM(MOTOR_MIN), DUTY2PWM(MOTOR_MAX));
         Serial.println(pwm);
