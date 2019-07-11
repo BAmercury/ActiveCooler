@@ -18,6 +18,8 @@
 #define MOTOR_MIN 20 // (In terms of duty cycle) At TEMP_MIN this speed will engage
 #define MOTOR_MAX 100 // (In terms of duty cycle) At TEMP_MAX this speed will engage
 
+#define PWM_TOP 639 // TOP Value for PWM
+
 // Configure onewire object
 OneWire oneWire(PIN_TEMP_ONEWIRE);
 
@@ -26,15 +28,16 @@ DallasTemperature sensors(&oneWire);
 
 int pwm = 0;
 
+// Convert given duty cycle to valid pwm value
 long DUTY2PWM(int duty)
 {
     if (duty == 100)
     {
-        return 639;
+        return PWM_TOP;
     }
     else
     {
-        long pwm = ( (639 * duty) / 100);
+        long pwm = ( (PWM_TOP * duty) / 100);
         return pwm;
     }
 
@@ -54,9 +57,8 @@ void setup(void)
     // Prescaler = 1, TOP = 639
     TCCR1A = (_BV(COM1A1) |_BV(WGM11) ); // Noninverting PWM signal
     TCCR1B = (_BV(WGM13) | _BV(WGM12) | _BV(CS10) ); // Prescaler 1
-    
     TCCR1C = 0;
-    ICR1 = 639; // TOP value
+    ICR1 = PWM_TOP; // TOP value
     DDRB |= _BV(DDB5); // Enable output
 
 
@@ -72,11 +74,12 @@ void loop(void)
         to all connected sensors on the bus
      */ 
     sensors.requestTemperatures();
-
     float temp = sensors.getTempFByIndex(0);
-    // Check if reading was successful
 
-    if (temp != DEVICE_DISCONNECTED_C) // Refer to DallasTemperature.h for error codes
+    // Refer to DallasTemperature.h for error codes
+    // If below negative -196.6 yield an error
+    // If the sensor wire is disconnected or if sensor is removed from ground
+    if (temp != DEVICE_DISCONNECTED_F)
     {
         Serial.print("Temperatuare (F): ");
         Serial.print(temp);
@@ -84,6 +87,11 @@ void loop(void)
         // Map the temperature to fan pwm value
         pwm = map(temp, TEMP_MIN, TEMP_MAX, DUTY2PWM(MOTOR_MIN), DUTY2PWM(MOTOR_MAX));
         Serial.print("PWM: ");
+        // Apply limits (0-639)
+        if (pwm > PWM_TOP)
+        {
+            pwm = PWM_TOP;
+        }
         Serial.println(pwm);
     }
     else
@@ -93,7 +101,7 @@ void loop(void)
     }
 
 
-    // Pin 6 on Sparkfun Pro Micro is connected to Timer4
+    // Pin 9 on Sparkfun Pro Micro is connected to Timer 1
     OCR1A = pwm; // Set PWM
 
 
