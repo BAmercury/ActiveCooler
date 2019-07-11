@@ -25,7 +25,15 @@ https://github.com/PaulStoffregen/OneWire
     
     - Motor speeds range from 0-100% duty cycle (0-100)
 
-    -  Exposed parameters are defined at the top of the code
+    - Exposed parameters are defined at the top of the code
+
+3. Error Catching (In both cases, fan is turned off):
+
+    - When sensor's sense wire is disconnected from MCU
+
+    - When sensor itself is disconnected from ground
+
+4. No error catching for when sensor is disconnected from power
 
 ## Wiring Schematic:
 ![alt text](cooler_schem.png "Wiring Guide")
