@@ -18,7 +18,7 @@
 #define MOTOR_MAX 100 // (In terms of duty cycle) At TEMP_MAX this speed will engage
 
 // Macro to converts from duty (0..100) to PWM (0..79)
-#define DUTY2PWM(x)  ((79*(x))/100)
+#define DUTY2PWM(x)  ((639*(x))/100)
 
 // Configure onewire object
 OneWire oneWire(PIN_TEMP_ONEWIRE);
@@ -34,15 +34,16 @@ void setup(void)
 
     // Start the temperature library
     sensors.begin();
-
-    // Using Timer 1 for PWM (OC1A, Pin 9)
+    pinMode(9, OUTPUT);
+    // Using Timer 1 for PWM (OC1A, PB5, Pin 9)
     // Set Timer 1 for 25kHz frequency
-    TCCR1A |= _BV(COM1A1) | _BV(WGM11);
-    TCCR1B |= _BV(WGM13) | _BV(WGM12) | _BV(CS11); // Prescaler 8
-    // 25kHz = (16 Mhz / 8) / (79 + 1)
+    TCCR1A = (_BV(COM1A1) |_BV(WGM11) ); // Noninverting PWM signal
+    TCCR1B = (_BV(WGM13) | _BV(WGM12) | _BV(CS10) ); // Prescaler 1
+    // 25kHz = (16 Mhz / 1) / (639 + 1)
     TCCR1C = 0;
-    ICR1 = 79; // TOP value
-    DDRB |= _BV(DDB5); // Set output mode D7, 128
+    ICR1 = 639; // TOP value
+
+
 
 }
 
@@ -76,10 +77,9 @@ void loop(void)
     }
 
 
-
-
     // Pin 6 on Sparkfun Pro Micro is connected to Timer4
-    OCR4D = pwm; // Set PWM
+    OCR1A = pwm; // Set PWM
+    DDRB |= _BV(DDB5);
 
 
 
