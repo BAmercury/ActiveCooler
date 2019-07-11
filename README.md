@@ -1,6 +1,7 @@
 # ActiveCooler
 
-Simple script to actuate cooling fans based on temperature sensor readout
+Program that configures MCU's timer registers to match PWM Frequency requirements of HVAC cooling fans
+and actuates them based on temperature sensor readings
 
 ## Hardware
 Device: SparkFun Pro Micro 5V/16MHz
