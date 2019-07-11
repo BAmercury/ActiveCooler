@@ -12,14 +12,11 @@
 
 
 // Temperature Ranges (fahrenheit)
-#define TEMP_MIN 80
+#define TEMP_MIN 70
 #define TEMP_MAX 105
 // Motor Speed Ranges
 #define MOTOR_MIN 20 // (In terms of duty cycle) At TEMP_MIN this speed will engage
 #define MOTOR_MAX 100 // (In terms of duty cycle) At TEMP_MAX this speed will engage
-
-// Macro to converts from duty (0..100) to PWM (0..639)
-#define DUTY2PWM(x)  ((639*(x))/100)
 
 // Configure onewire object
 OneWire oneWire(PIN_TEMP_ONEWIRE);
@@ -28,6 +25,20 @@ OneWire oneWire(PIN_TEMP_ONEWIRE);
 DallasTemperature sensors(&oneWire);
 
 int pwm = 0;
+
+long DUTY2PWM(int duty)
+{
+    if (duty == 100)
+    {
+        return 639;
+    }
+    else
+    {
+        long pwm = ( (639 * duty) / 100);
+        return pwm;
+    }
+
+}
 
 void setup(void)
 {
