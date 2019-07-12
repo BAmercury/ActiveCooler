@@ -24,7 +24,7 @@
 
 #define PWM_TOP 639 // TOP Value for PWM
 
-unsigned long SAMPLING_PERIOD = 30; // Period in Seconds
+unsigned long SAMPLING_PERIOD = 30; // Period in milliseconds
 unsigned long previous_ms = 0; 
 
 // Configure onewire object
@@ -34,7 +34,6 @@ OneWire oneWire(PIN_TEMP_ONEWIRE);
 DallasTemperature sensors(&oneWire);
 
 int pwm = 0;
-int temperature = 0;
 
 // Convert given duty cycle to valid pwm value
 long DUTY2PWM(int duty)
@@ -76,8 +75,9 @@ void setup(void)
 void loop(void)
 {
 
-    static unsigned long current_ms = millis();
-    if (current_ms - previous_ms >= SAMPLING_PERIOD)
+    // Check for set sampling time interval
+    unsigned long current_ms = millis();
+    if ((unsigned long)(current_ms - previous_ms) >= SAMPLING_PERIOD)
     {
 
         /*
@@ -86,7 +86,7 @@ void loop(void)
         */ 
         digitalWrite(PIN_DEBUG, HIGH); // Set Debug pin how, use scope to measure sensor update rate
         sensors.requestTemperatures();
-        temperature = sensors.getTempFByIndex(0);
+        float temperature = sensors.getTempFByIndex(0);
 
         // Refer to DallasTemperature.h for error codes
         // If below negative -196.6 yield an error
