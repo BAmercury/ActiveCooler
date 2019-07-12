@@ -9,6 +9,7 @@
 // Pins
 #define PIN_TEMP_ONEWIRE 7
 #define PIN_MOTOR_OUTPUT 9
+#define PIN_LOG 2
 
 
 // Temperature Ranges (fahrenheit)
@@ -50,6 +51,7 @@ void setup(void)
     // Start the temperature library
     sensors.begin();
     pinMode(PIN_MOTOR_OUTPUT, OUTPUT);
+    pinMode(PIN_LOG, OUTPUT);
 
     // Using Timer 1 for PWM (OC1A, PB5, Pin 9 on Sparkfun Board)
     // Set Timer 1 for 25kHz frequency
@@ -60,6 +62,7 @@ void setup(void)
     TCCR1C = 0;
     ICR1 = PWM_TOP; // TOP value
     DDRB |= _BV(DDB5); // Enable output
+    digitalWrite(PIN_LOG, LOW);
 
 
 
@@ -73,6 +76,7 @@ void loop(void)
         sensors.requestTemperatures() issues a global command
         to all connected sensors on the bus
      */ 
+    digitalWrite(PIN_LOG, HIGH);
     sensors.requestTemperatures();
     float temp = sensors.getTempFByIndex(0);
 
@@ -103,6 +107,7 @@ void loop(void)
 
     // Pin 9 on Sparkfun Pro Micro is connected to Timer 1
     OCR1A = pwm; // Set PWM
+    digitalWrite(PIN_LOG, LOW);
 
 
 
