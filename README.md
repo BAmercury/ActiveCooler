@@ -1,7 +1,6 @@
 # ActiveCooler
 
-Program that configures MCU's timer registers to match PWM Frequency requirements of HVAC cooling fans
-and actuates them based on temperature sensor readings
+Program that configures MCU's timer registers to sample sensor data and output PWM to an HVAC cooling fan
 
 ## Hardware
 Device: SparkFun Pro Micro 5V/16MHz
