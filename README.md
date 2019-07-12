@@ -4,7 +4,7 @@ Program that configures MCU's timer registers to match PWM Frequency requirement
 and actuates them based on temperature sensor readings
 
 ## Hardware
-Device: SparkFun Pro Micro 5V/16MHz
+Device: SparkFun Pro Micro 5V/16MHz (Atmega32U4)
 
 Temperature Sensor: DS18B20
 

@@ -2,6 +2,10 @@
     Simple Active Cooler
     Bhautik (Brian) Amin
     brianamin@dpiuav.com
+
+    Device: SparkFun Pro Micro 5V/16MHz (Atmega32U4)
+    Temperature Sensor: DS18B20
+    Fan: SanAce 92W XF-P05801, DC 24V/1.0A
 */
 #include <DallasTemperature.h>
 #include <OneWire.h>
