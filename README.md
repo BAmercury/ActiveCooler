@@ -9,6 +9,8 @@ Temperature Sensor: DS18B20
 
 Fan: SanAce 92W XF-P05801, DC 24V/1.0A
 
+- https://www.mouser.com/datasheet/2/471/San_Ace_92WL38_E-1316567.pdf
+
 ## Libraries used:
 https://github.com/milesburton/Arduino-Temperature-Control-Library
 
