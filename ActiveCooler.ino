@@ -33,7 +33,7 @@ OneWire oneWire(PIN_TEMP_ONEWIRE);
 // Pass onewire object reference to Temperature library
 DallasTemperature sensors(&oneWire);
 
-int pwm = 0;
+long pwm = 0;
 
 // Convert given duty cycle to valid pwm value
 long DUTY2PWM(int duty)
@@ -97,7 +97,7 @@ void loop(void)
             Serial.print(temperature);
             Serial.print(", ");
             // Map the temperature to fan pwm value
-            pwm = map(temperature, TEMP_MIN, TEMP_MAX, DUTY2PWM(MOTOR_MIN), DUTY2PWM(MOTOR_MAX));
+            pwm = map((long)temperature, TEMP_MIN, TEMP_MAX, DUTY2PWM(MOTOR_MIN), DUTY2PWM(MOTOR_MAX));
             Serial.print("PWM: ");
             // Apply limits (0-639)
             if (pwm > PWM_TOP)
