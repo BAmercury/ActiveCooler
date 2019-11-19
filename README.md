@@ -49,7 +49,7 @@ https://github.com/PaulStoffregen/OneWire
 ![alt text](cooler_schem.png "Wiring Guide")
 
 
-## Final Assmebly:
-
+## Perf-Board Assembly:
+![alt text](cooler_hardware.png "Annotated perfboard assembly")
 
 

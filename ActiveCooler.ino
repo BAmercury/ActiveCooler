@@ -89,7 +89,7 @@ void loop(void)
         float temperature = sensors.getTempFByIndex(0);
 
         // Refer to DallasTemperature.h for error codes
-        // If below negative -196.6 yield an error
+        // If equal to negative -196.6 yield an error
         // If the sensor wire is disconnected or if sensor is removed from ground
         if (temperature != DEVICE_DISCONNECTED_F)
         {
@@ -99,10 +99,14 @@ void loop(void)
             // Map the temperature to fan pwm value
             pwm = map((long)temperature, TEMP_MIN, TEMP_MAX, DUTY2PWM(MOTOR_MIN), DUTY2PWM(MOTOR_MAX));
             Serial.print("PWM: ");
-            // Apply limits (0-639)
+            // Apply limits (Between 0 and 639)
             if (pwm > PWM_TOP)
             {
                 pwm = PWM_TOP;
+            }
+            else if (pwm < 0)
+            {
+                pwm = 0;
             }
             Serial.println(pwm);
         }
