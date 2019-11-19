@@ -49,3 +49,7 @@ https://github.com/PaulStoffregen/OneWire
 ![alt text](cooler_schem.png "Wiring Guide")
 
 
+## Final Assmebly:
+
+
+
