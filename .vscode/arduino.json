@@ -1,7 +1,7 @@
 {
     "board": "SparkFun:avr:promicro",
     "configuration": "cpu=16MHzatmega32U4",
-    "port": "COM32",
+    "port": "COM30",
     "sketch": "ActiveCooler.ino",
     "programmer": "AVR ISP",
     "output": "../build"
