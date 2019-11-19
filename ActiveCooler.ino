@@ -16,7 +16,7 @@
 #define PIN_DEBUG 2
 
 // Temperature Ranges (fahrenheit)
-#define TEMP_MIN 70
+#define TEMP_MIN 80
 #define TEMP_MAX 105
 // Motor Speed Ranges
 #define MOTOR_MIN 20 // (In terms of duty cycle) At TEMP_MIN this speed will engage
